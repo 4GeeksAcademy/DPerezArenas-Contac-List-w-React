@@ -7,8 +7,11 @@ import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navbar } from "./component/navbar.js";
 import { Footer } from "./component/footer";
+import { Contact } from "./views/Agenda.jsx";
+import { AddContact } from "./views/AddContact.jsx";
+import { DeleteContact } from "./component/DeleteContact.jsx";
 
 //create your first component
 const Layout = () => {
@@ -20,11 +23,10 @@ const Layout = () => {
 		<div>
 			<BrowserRouter basename={basename}>
 				<ScrollToTop>
-					<Navbar />
 					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/demo" element={<Demo />} />
-						<Route path="/single/:theid" element={<Single />} />
+						<Route path="/" element={<Contact />} />
+						{/* <Route path="/modal" element={<DeleteContact />} /> */}
+						<Route path="/new-contact" element={<AddContact />} />
 						<Route path="*" element={<h1>Not found!</h1>} />
 					</Routes>
 					<Footer />
