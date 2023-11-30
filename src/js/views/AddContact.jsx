@@ -31,9 +31,9 @@ export const AddContact = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (name === '' || email === '' || address === '' || phone === '') {
-      return setShowAlert(true);
+      setShowAlert(true);
+      return;}
     // (alert(("All fields must be filled")));
-    } else {
       const newContact = {
         full_name: name,
         email: email,
@@ -48,7 +48,7 @@ export const AddContact = () => {
         address: address,
         phone: phone
       };
-    }
+    
 
     if (idContact && idContact !== 'new') {
       actions.updateContact(idContact, editedContact);
