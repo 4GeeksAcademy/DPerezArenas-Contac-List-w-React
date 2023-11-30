@@ -21,7 +21,7 @@ const Layout = () => {
 				<Routes>
 					<Route path="/" element={<Agenda />} />
 					{/* <Route path="/modal" element={<DeleteContact />} /> */}
-					<Route path="/new-contact/:idContact" element={<AddContact />} />
+					<Route path="/:idContact" element={<AddContact />} />
 					<Route path="*" element={<h1>Error 404 - Not found!</h1>} />
 				</Routes>
 				<Footer />

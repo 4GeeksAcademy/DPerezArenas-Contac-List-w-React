@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Context } from '../store/appContext.js';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 
@@ -11,6 +11,7 @@ export const AddContact = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
   // if(id)
   // const location = useLocation();
@@ -24,35 +25,38 @@ export const AddContact = () => {
         setPhone(contactToEdit.phone);
         setAddress(contactToEdit.address);
       }
-    } else {
-      // aca geenro algun booleano con el cual decido si muestro boton agregar o editar.
     }
   }, [idContact, store.contact]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const newContact = {
-      full_name: name,
-      email: email,
-      agenda_slug: 'Daniel',
-      address: address,
-      phone: phone
-    };
-    const editedContact = {
-      full_name: name,
-      email: email,
-      agenda_slug: 'Daniel',
-      address: address,
-      phone: phone
-    };
+    if (name === '' || email === '' || address === '' || phone === '') {
+      return setShowAlert(true);
+    // (alert(("All fields must be filled")));
+    } else {
+      const newContact = {
+        full_name: name,
+        email: email,
+        agenda_slug: 'Daniel',
+        address: address,
+        phone: phone
+      };
+      const editedContact = {
+        full_name: name,
+        email: email,
+        agenda_slug: 'Daniel',
+        address: address,
+        phone: phone
+      };
+    }
 
     if (idContact && idContact !== 'new') {
-    actions.updateContact(idContact, editedContact);
-    
-  } else {
-    console.log("Creating new contact");
-    actions.createContact(newContact);
-  }
+      actions.updateContact(idContact, editedContact);
+
+    } else {
+      console.log("Creating new contact");
+      actions.createContact(newContact);
+    }
     navigate("/");
   };
 
@@ -65,7 +69,7 @@ export const AddContact = () => {
 
   return (
     <Form className='container mt-5' onSubmit={handleSubmit}>
-      <h1 className="text-center">Add a new contact</h1>
+      <h1 className="text-center">{idContact === 'new' ? 'Add new contact' : 'Contact to edit'}</h1>
       <Form.Group className="mb-3" controlId="formGroupEmail">
         <Form.Label className='fw-bold'>Full Name</Form.Label>
         <Form.Control
@@ -107,6 +111,19 @@ export const AddContact = () => {
         <Button variant="secondary" type='reset' onClick={handleReset}>reset</Button>
       </div>
       <Link to="/">or get back to contacts</Link>
+      <Modal show={showAlert} onHide={() => setShowAlert(false)}>
+        <Modal.Header closeButton className="bg-info bg-opacity-75">
+          <Modal.Title>Form error!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          All fields must be filled.
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowAlert(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Form>
   );
 }
