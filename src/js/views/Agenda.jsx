@@ -41,7 +41,7 @@ export const Agenda = () => {
                                 <span
                                     className="fas fa-pencil-alt me-5"
                                     style={{ cursor: "pointer" }}
-                                    onClick={() => navigate(`/new-contact/${item.id}`)}>
+                                    onClick={() => navigate(`/${item.id}`)}>
                                 </span>
                                 <span
                                     className="fas fa-trash-alt"
